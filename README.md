@@ -13,21 +13,6 @@
 ## Github Actions
 [![Node CI](https://github.com/BairamovTimur/frontend-project-lvl3/workflows/Node%20CI/badge.svg)](https://github.com/BairamovTimur/frontend-project-lvl3/actions?query=workflow%3A%22Node+CI%22)
 
-# Demo
+# [Demo](frontend-project-lvl3.bairamovtimur.vercel.app)
 
-# Install
 
-```bash
-git clone https://github.com/BairamovTimur/frontend-project-lvl3.git
-cd frontend-project-lvl3
-make install
-```
-
-# Scripts
-
-- `make install` - Install dependences
-- `make publish` - Publish project
-- `make lint` - Start lint
-- `make test` - Start tests
-- `test-watch` - Start test watch mode
-- `test-coverage` - Start test coverage mode
