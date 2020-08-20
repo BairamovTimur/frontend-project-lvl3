@@ -1,5 +1,4 @@
-import { test, expect } from '@jest/globals';
-import start from '../src/index.js';
+import start from '../src/index';
 
 test('getTrue', () => {
   expect(start()).toEqual(true);
