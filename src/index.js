@@ -1,8 +1,5 @@
 import 'bootstrap';
 import './app.scss';
+import init from './init';
 
-const getTrue = () => true;
-
-const start = () => getTrue();
-
-export default start;
+init();
