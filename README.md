@@ -13,6 +13,6 @@
 ## Github Actions
 [![Node CI](https://github.com/BairamovTimur/frontend-project-lvl3/workflows/Node%20CI/badge.svg)](https://github.com/BairamovTimur/frontend-project-lvl3/actions?query=workflow%3A%22Node+CI%22)
 
-# [Demo](frontend-project-lvl3.bairamovtimur.vercel.app)
+# [Demo](https://frontend-project-lvl3.bairamovtimur.vercel.app/)
 
 
