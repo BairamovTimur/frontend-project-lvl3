@@ -26,7 +26,7 @@ const renderFeeds = (feeds, posts, elements) => {
   elements.feedsBox.append(...feedNodes);
 };
 
-const renderForm = (form, elements) => {
+const renderForm = (form, elements, i18next) => {
   switch (form.status) {
     case 'filling':
       elements.submitBtn.removeAttribute('disabled');
@@ -34,7 +34,7 @@ const renderForm = (form, elements) => {
       elements.input.value = '';
       elements.feedback.classList.remove('text-danger');
       elements.feedback.classList.add('text-success');
-      elements.feedback.textContent = 'Rss has been loaded';
+      elements.feedback.textContent = i18next.t('sucessLoaded');
       break;
 
     case 'failed':
@@ -49,7 +49,7 @@ const renderForm = (form, elements) => {
       break;
 
     default:
-      throw Error(`Unknown form status: ${form.status}`);
+      throw Error(i18next.t('error.UnknownFormStatus', { status: form.status }));
   }
 };
 
@@ -74,15 +74,16 @@ const renderAppError = (error, elements) => {
   elements.feedback.textContent = error;
 };
 
-const initView = (state, elements) => {
+const initView = (state, elements, i18next) => {
   elements.input.focus();
 
   const mapping = {
-    'form.status': () => renderForm(state.form, elements),
+    'form.status': () => renderForm(state.form, elements, i18next),
     'form.fields.url': () => renderFormErrors(state.form, elements),
     'form.submitCount': () => elements.input.focus(),
     error: () => renderAppError(state.error, elements),
     feeds: () => renderFeeds(state.feeds, state.posts, elements),
+    updatePostCount: () => renderFeeds(state.feeds, state.posts, elements),
   };
 
   const watchedState = onChange(state, (path) => {

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import * as yup from 'yup';
-import { uniqueId } from 'lodash';
+import i18next from 'i18next';
+import { uniqueId, differenceBy } from 'lodash';
 import initView from './view';
 import parseRSS from './parser';
+import resources from './locales';
 
-const addedIdToPost = ({ title, link }, feedId) => ({
-  title,
-  link,
+const addIdToPost = (post, feedId) => ({
+  ...post,
   feedId,
   id: uniqueId(),
 });
@@ -29,22 +30,27 @@ const addedBefore = (currentFeeds, feedUrl) => {
 
 const validate = (currentFeeds, feedUrl) => {
   if (addedBefore(currentFeeds, feedUrl)) {
-    return 'RSS already exists';
+    return i18next.t('error.alreadyExists');
   }
 
-  try {
-    schema.validateSync(feedUrl);
+  if (schema.isValidSync(feedUrl)) {
     return null;
-  } catch (e) {
-    return e.message;
   }
+
+  return i18next.t('error.invalidUrl');
 };
 
-export default () => {
+export default async () => {
+  await i18next.init({
+    lng: 'en',
+    resources,
+  });
+
   const state = {
     feeds: [],
     posts: [],
     error: null,
+    updatePostCount: 0,
     form: {
       submitCount: 0,
       status: 'filling',
@@ -65,7 +71,24 @@ export default () => {
     feedback: document.querySelector('.feedback'),
   };
 
-  const watched = initView(state, elements);
+  const watched = initView(state, elements, i18next);
+
+  const updatePosts = () => {
+    const promises = state.feeds.map((feed) => getFeedData(feed.url));
+    Promise.all(promises).then((dataFeeds) => {
+      dataFeeds.forEach(({ posts }, index) => {
+        const feed = watched.feeds[index];
+        const oldPosts = watched.posts.filter((post) => post.feedId === feed.id);
+        const newPost = differenceBy(posts, oldPosts, 'link')
+          .map((post) => addIdToPost(post, feed.id));
+        watched.posts = [...newPost, ...watched.posts];
+      });
+      watched.updatePostCount += 1;
+      setTimeout(() => updatePosts(), 5000);
+    });
+  };
+
+  setTimeout(() => updatePosts(), 5000);
 
   elements.form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -92,12 +115,13 @@ export default () => {
       const { title, posts } = await getFeedData(url);
       watched.form.status = 'filling';
       const feedId = uniqueId();
-      posts.map((post) => addedIdToPost(post, feedId))
-        .forEach((post) => watched.posts.push(post));
+      const postsWithId = posts.map((post) => addIdToPost(post, feedId));
+      watched.posts = [...watched.posts, ...postsWithId];
       watched.feeds.push({ url, title, id: feedId });
     } catch (err) {
       watched.form.status = 'failed';
-      watched.error = err.message;
+      console.log(err.message);
+      watched.error = i18next.t('error.network');
     }
     watched.form.submitCount += 1;
   });
