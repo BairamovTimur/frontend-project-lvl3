@@ -49,8 +49,6 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jest": "^23.17.1",
     "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.1.0",
-    "jest-cli": "^26.1.0",
     "node-sass": "^4.14.1",
     "path": "^0.12.7",
     "postcss-loader": "^3.0.0",

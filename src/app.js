@@ -12,11 +12,11 @@ const addIdToPost = (post, feedId) => ({
   id: uniqueId(),
 });
 
-const getFeedData = async (url) => {
+const getFeedData = (url) => {
   const cornProxy = 'https://cors-anywhere.herokuapp.com/';
   const fullUrl = `${cornProxy}${url}`;
-  const response = await axios.get(fullUrl);
-  return parseRSS(response.data);
+
+  return axios.get(fullUrl).then((response) => parseRSS(response.data));
 };
 
 const schema = yup
@@ -25,6 +25,7 @@ const schema = yup
 
 const addedBefore = (currentFeeds, feedUrl) => {
   const feedsBefore = currentFeeds.filter(({ url }) => url === feedUrl);
+
   return feedsBefore.length > 0;
 };
 
@@ -40,12 +41,7 @@ const validate = (currentFeeds, feedUrl) => {
   return i18next.t('error.invalidUrl');
 };
 
-export default async () => {
-  await i18next.init({
-    lng: 'en',
-    resources,
-  });
-
+const initApp = () => {
   const state = {
     feeds: [],
     posts: [],
@@ -90,7 +86,7 @@ export default async () => {
 
   setTimeout(() => updatePosts(), 5000);
 
-  elements.form.addEventListener('submit', async (e) => {
+  elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const url = formData.get('url');
@@ -101,6 +97,7 @@ export default async () => {
         error,
         valid: false,
       };
+
       return;
     }
 
@@ -109,20 +106,27 @@ export default async () => {
       valid: true,
     };
 
-    try {
-      watched.error = null;
-      watched.form.status = 'loading';
-      const { title, posts } = await getFeedData(url);
+    watched.error = null;
+    watched.form.status = 'loading';
+    getFeedData(url).then(({ title, posts }) => {
       watched.form.status = 'filling';
       const feedId = uniqueId();
       const postsWithId = posts.map((post) => addIdToPost(post, feedId));
       watched.posts = [...watched.posts, ...postsWithId];
       watched.feeds.push({ url, title, id: feedId });
-    } catch (err) {
+    }).catch((err) => {
       watched.form.status = 'failed';
       console.log(err.message);
       watched.error = i18next.t('error.network');
-    }
-    watched.form.submitCount += 1;
+    }).then(() => {
+      watched.form.submitCount += 1;
+    });
   });
+};
+
+export default () => {
+  i18next.init({
+    lng: 'en',
+    resources,
+  }).then(initApp);
 };
