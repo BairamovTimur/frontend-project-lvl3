@@ -2,16 +2,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
-const glob = require('glob');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PurgecssPlugin = require('purgecss-webpack-plugin');
-
-const PATHS = {
-  src: path.join(__dirname),
-};
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'production',
+  devtool: 'source-map',
+  mode: process.env.NODE_ENV || 'development',
   module: {
     rules: [
       {
@@ -25,9 +19,8 @@ module.exports = {
         test: /\.scss$/,
         use: [{
           loader: 'style-loader', // inject CSS to page
-        }, {
-          loader: MiniCssExtractPlugin.loader,
-        }, {
+        },
+        {
           loader: 'css-loader', // translates CSS into CommonJS modules
         }, {
           loader: 'postcss-loader', // Run post css actions
@@ -48,12 +41,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'style.css',
-    }),
-    new PurgecssPlugin({
-      paths: glob.sync(`${PATHS.src}/**/*.html`, { nodir: true }),
+      favicon: 'src/favicon.ico',
     }),
   ],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000,
+  },
 };
