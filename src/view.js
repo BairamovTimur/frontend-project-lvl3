@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import onChange from 'on-change';
+import i18next from 'i18next';
 
 const buildPostsElement = (post) => {
   const blockEl = document.createElement('div');
@@ -26,7 +27,7 @@ const renderFeeds = (feeds, posts, elements) => {
   elements.feedsBox.append(...feedNodes);
 };
 
-const renderForm = (form, elements, i18next) => {
+const renderForm = (form, elements) => {
   switch (form.status) {
     case 'filling':
       elements.submitBtn.removeAttribute('disabled');
@@ -49,7 +50,7 @@ const renderForm = (form, elements, i18next) => {
       break;
 
     default:
-      throw Error(i18next.t('error.UnknownFormStatus', { status: form.status }));
+      throw Error(i18next.t('error.unknownFormStatus', { status: form.status }));
   }
 };
 
@@ -74,11 +75,11 @@ const renderAppError = (error, elements) => {
   elements.feedback.textContent = error;
 };
 
-const initView = (state, elements, i18next) => {
+const initView = (state, elements) => {
   elements.input.focus();
 
   const mapping = {
-    'form.status': () => renderForm(state.form, elements, i18next),
+    'form.status': () => renderForm(state.form, elements),
     'form.fields.url': () => renderFormErrors(state.form, elements),
     'form.submitCount': () => elements.input.focus(),
     error: () => renderAppError(state.error, elements),
