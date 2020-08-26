@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import { uniqueId, differenceBy } from 'lodash';
 
 import initView from './view';
-import parseRSS from './parser';
+import parseRSS from './rss';
 import resources from './locales';
 
 const addIdToPost = (post, feedId) => ({
@@ -123,7 +123,7 @@ export default () => {
       }).catch((err) => {
         watched.form.status = 'failed';
         console.log(err.message);
-        watched.error = i18next.t('error.network');
+        watched.error = err.message === i18next.t('error.invalidFormatRSS') ? err.message : i18next.t('error.network');
       }).then(() => {
         watched.form.submitCount += 1;
       });
