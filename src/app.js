@@ -123,7 +123,7 @@ export default () => {
       }).catch((err) => {
         watched.form.status = 'failed';
         console.log(err.message);
-        watched.error = err.message === i18next.t('error.invalidFormatRSS') ? err.message : i18next.t('error.network');
+        watched.error = i18next.t('error.common');
       }).then(() => {
         watched.form.submitCount += 1;
       });
