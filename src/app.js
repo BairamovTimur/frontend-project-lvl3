@@ -8,59 +8,68 @@ import initView from './watchers';
 import parseRSS from './rss';
 import resources from './locales';
 
+const intervalPostsUpdate = 5000;
+
 const addIdToPost = (post, feedId) => ({
   ...post,
   feedId,
   id: uniqueId(),
 });
 
-const getFeedData = (url) => {
+const addProxy = (url) => {
   const proxyURL = 'https://cors-anywhere.herokuapp.com/';
-  const fullUrl = `${proxyURL}${url}`;
-
-  return axios.get(fullUrl).then((response) => parseRSS(response.data));
+  return `${proxyURL}${url}`;
 };
 
-const baseSchema = yup
+const baseURLSchema = yup
   .string()
   .url();
 
-const validateURL = (currentFeeds, feedUrl) => {
-  const feedUrls = currentFeeds.map((feed) => feed.url);
-  const actualSchema = baseSchema.notOneOf(feedUrls, i18next.t('error.alreadyExists'));
+const validateURL = (feeds, url) => {
+  const feedUrls = feeds.map((feed) => feed.url);
+  const actualSchema = baseURLSchema.notOneOf(feedUrls, i18next.t('error.alreadyExists'));
   try {
-    actualSchema.validateSync(feedUrl);
+    actualSchema.validateSync(url);
     return null;
   } catch (e) {
     return e.message;
   }
 };
 
-const getNewPosts = (feeds, currentPosts) => {
-  const promises = feeds.map((feed) => getFeedData(feed.url));
-  return Promise.all(promises).then((dataFeeds) => dataFeeds
-    .flatMap(({ posts }, index) => {
-      const feed = feeds[index];
-      const oldPosts = currentPosts.filter((post) => post.feedId === feed.id);
+const getNewPosts = (watched) => {
+  const promises = watched.feeds.map((feed) => {
+    const urlWithProxy = addProxy(feed.url);
+    return axios.get(urlWithProxy);
+  });
 
+  return Promise.all(promises).then((responses) => {
+    const dataFeeds = responses.map((response) => parseRSS(response.data));
+
+    return dataFeeds.flatMap(({ posts }, index) => {
+      const feed = watched.feeds[index];
+      const oldPosts = watched.posts.filter((post) => post.feedId === feed.id);
       const newPosts = differenceBy(posts, oldPosts, 'link')
         .map((post) => addIdToPost(post, feed.id));
+
       return newPosts;
-    }));
+    });
+  });
 };
 
 const updatePosts = (watched) => {
-  const promise = getNewPosts(watched.feeds, watched.posts);
+  const promise = getNewPosts(watched);
   promise.then((newPosts) => {
     watched.posts = [...newPosts, ...watched.posts];
-    setTimeout(() => updatePosts(watched), 5000);
+    setTimeout(() => updatePosts(watched), intervalPostsUpdate);
   });
 };
 
 const loadRss = (watched, url) => {
   watched.error = null;
   watched.loadingProcess.status = 'loading';
-  getFeedData(url).then(({ title, posts }) => {
+  const urlWithProxy = addProxy(url);
+  axios.get(urlWithProxy).then((response) => {
+    const { title, posts } = parseRSS(response.data);
     watched.loadingProcess.status = 'filling';
     const feedId = uniqueId();
     const postsWithId = posts.map((post) => addIdToPost(post, feedId));
@@ -69,8 +78,6 @@ const loadRss = (watched, url) => {
   }).catch(() => {
     watched.error = i18next.t('error.common');
     watched.loadingProcess.status = 'failed';
-  }).then(() => {
-    watched.form.submitCount += 1;
   });
 };
 
@@ -102,8 +109,6 @@ export default () => {
   }).then(() => {
     const watched = initView(state, elements);
 
-    setTimeout(() => updatePosts(watched), 5000);
-
     elements.form.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
@@ -122,5 +127,7 @@ export default () => {
         };
       }
     });
+
+    setTimeout(() => updatePosts(watched), intervalPostsUpdate);
   });
 };

@@ -18,6 +18,7 @@ const parseRSS = (data) => {
     const linkNode = post.querySelector('link');
     const title = titleNode.textContent;
     const link = linkNode.textContent;
+
     return { title, link };
   });
 
