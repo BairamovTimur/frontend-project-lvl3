@@ -4,14 +4,15 @@
   "description": "RSS aggregator",
   "main": "./bin/index.js",
   "scripts": {
-    "test": "npx -n --experimental-vm-modules jest"
+    "test": "jest"
   },
   "bin": {
     "gendiff": "bin/index.js"
   },
   "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/"
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -52,12 +53,18 @@
     "html-webpack-plugin": "^4.3.0",
     "node-sass": "^4.14.1",
     "path": "^0.12.7",
+    "jest": "^26.1.0",
+    "jest-cli": "^26.1.0",
+    "@testing-library/dom": "^7.24.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/user-event": "^12.1.3",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^9.0.3",
     "style-loader": "^1.2.1",
     "tether": "^1.4.7",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "nock": "12.0.3"
   }
 }

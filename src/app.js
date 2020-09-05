@@ -36,31 +36,22 @@ const validateURL = (feeds, url) => {
   }
 };
 
-const getNewPosts = (watched) => {
-  const promises = watched.feeds.map((feed) => {
+const updatePosts = (watched) => watched
+  .feeds.map((feed) => {
     const urlWithProxy = addProxy(feed.url);
-    return axios.get(urlWithProxy);
-  });
-
-  return Promise.all(promises).then((responses) => {
-    const dataFeeds = responses.map((response) => parseRSS(response.data));
-
-    return dataFeeds.flatMap(({ posts }, index) => {
-      const feed = watched.feeds[index];
+    return axios.get(urlWithProxy).then((response) => {
+      const { posts } = parseRSS(response.data);
       const oldPosts = watched.posts.filter((post) => post.feedId === feed.id);
       const newPosts = differenceBy(posts, oldPosts, 'link')
         .map((post) => addIdToPost(post, feed.id));
-
-      return newPosts;
+      watched.posts = [...newPosts, ...watched.posts];
     });
   });
-};
 
-const updatePosts = (watched) => {
-  const promise = getNewPosts(watched);
-  promise.then((newPosts) => {
-    watched.posts = [...newPosts, ...watched.posts];
-    setTimeout(() => updatePosts(watched), intervalPostsUpdate);
+const makeUpdates = (watched) => {
+  const promises = updatePosts(watched);
+  Promise.all(promises).finally(() => {
+    setTimeout(() => makeUpdates(watched), intervalPostsUpdate);
   });
 };
 
@@ -128,6 +119,6 @@ export default () => {
       }
     });
 
-    setTimeout(() => updatePosts(watched), intervalPostsUpdate);
+    setTimeout(() => makeUpdates(watched), intervalPostsUpdate);
   });
 };

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Дайджест новостей о python</title>
+    <link>https://pythondigest.ru/</link>
+    <description>Рускоязычные анонсы свежих новостей о python и близлежащих технологиях.</description>
+    <atom:link href="https://pythondigest.ru/rss/" rel="self"></atom:link>
+    <language>ru-ru</language>
+    <lastBuildDate>Fri, 21 Aug 2020 01:34:48 +0300</lastBuildDate>
+    <item>
+      <title>Бот-викторина для ВКонтакта</title>
+      <link>https://habr.com/ru/post/515864/?utm_campaign=515864&amp;utm_source=habrahabr&amp;utm_medium=rss</link>
+      <description>&lt;p&gt;Месяца три назад мы с друзьями по сети «ВКонтакте» в общем чате (беседе) играли в угадайку — игру по мультфильму «Смешарики», который мы все любим. Правила: ведущий пишет цитаты персонажей мультика, игроки угадывают из какой серии эта цитата. Я решил сделать игру более интересной, и назначить на роль ведущего бота.&lt;/p&gt;</description>
+      <pubDate>Fri, 21 Aug 2020 01:34:48 +0300</pubDate>
+      <guid>https://habr.com/ru/post/515864/?utm_campaign=515864&amp;utm_source=habrahabr&amp;utm_medium=rss</guid>
+    </item>
+    <item>
+      <title>Data Version Control With Python and DVC</title>
+      <link>https://realpython.com/python-data-version-control/</link>
+      <description></description>
+      <pubDate>Thu, 20 Aug 2020 13:34:48 +0300</pubDate>
+      <guid>https://realpython.com/python-data-version-control/</guid>
+    </item>
+    <item>
+      <title>Python Bytes: #195 Runtime type checking for Python type hints</title>
+      <link>https://pythonbytes.fm/episodes/show/195/runtime-type-checking-for-python-type-hints</link>
+      <description>&lt;p&gt;Audio&lt;/p&gt;</description>
+      <pubDate>Thu, 20 Aug 2020 07:34:48 +0300</pubDate>
+      <guid>https://pythonbytes.fm/episodes/show/195/runtime-type-checking-for-python-type-hints</guid>
+    </item>
+    <item>
+      <title>Разбор официального Docker image для Python</title>
+      <link>https://pythonspeed.com/articles/official-python-docker-image/</link>
+      <description></description>
+      <pubDate>Thu, 20 Aug 2020 19:34:48 +0300</pubDate>
+      <guid>https://pythonspeed.com/articles/official-python-docker-image/</guid>
+    </item>
+    <item>
+      <title>Podcast.__init__: Building The Open Data Ecosystem For Music And More At Metabrainz</title>
+      <link>https://www.pythonpodcast.com/metabrainz-open-data-episode-276/</link>
+      <description>&lt;p&gt;Audio&lt;/p&gt;</description>
+      <pubDate>Wed, 19 Aug 2020 21:07:58 +0300</pubDate>
+      <guid>https://www.pythonpodcast.com/metabrainz-open-data-episode-276/</guid>
+    </item>
+    <item>
+      <title>sphinxcontrib-spelling 5.3.0</title>
+      <link>https://doughellmann.com/blog/2020/08/18/sphinxcontrib-spelling-5-3-0/</link>
+      <description></description>
+      <pubDate>Thu, 20 Aug 2020 01:07:58 +0300</pubDate>
+      <guid>https://doughellmann.com/blog/2020/08/18/sphinxcontrib-spelling-5-3-0/</guid>
+    </item>
+    <item>
+      <title>PyQt: Используем диалоги созданные в Qt Designer</title>
+      <link>https://www.learnpyqt.com/courses/qt-creator/creating-dialogs-qt-designer/</link>
+      <description></description>
+      <pubDate>Thu, 20 Aug 2020 03:07:58 +0300</pubDate>
+      <guid>https://www.learnpyqt.com/courses/qt-creator/creating-dialogs-qt-designer/</guid>
+    </item>
+    <item>
+      <title>Почему здравый смысл важнее паттернов, а Active Record не так уж и плох</title>
+      <link>https://habr.com/ru/post/515560/?utm_campaign=515560&amp;utm_source=habrahabr&amp;utm_medium=rss</link>
+      <description>&lt;p&gt;Так уж вышло, что разработчики, особенно молодые, любят паттерны, любят спорить о том, какой паттерн нужно применять здесь или там. Спорить до хрипоты: это фасад или прокси, а может даже синглтон. А если у вас не чистая, гексагональная архитектура, то некоторые разработчики готовы сжечь на костре Святой Инквизиции.&lt;br/&gt;
+&lt;br/&gt;
+При этом они забывают, что паттерны — это лишь возможные решения. У паттернов, также как и у любых принципов, есть границы применимости, и важно их понимать. Дорога в ад вымощена слепым и религиозным следованием пусть даже и авторитетным словам.&lt;br/&gt;
+&lt;br/&gt;
+А наличие во фреймворке нужных паттернов никак не гарантирует их правильного и осознанного применения.&lt;/p&gt;</description>
+      <pubDate>Wed, 19 Aug 2020 23:07:58 +0300</pubDate>
+      <guid>https://habr.com/ru/post/515560/?utm_campaign=515560&amp;utm_source=habrahabr&amp;utm_medium=rss</guid>
+    </item>
+    <item>
+      <title>Распознавание мяча в волейболе с OpenCV и Tensorflow</title>
+      <link>https://habr.com/ru/post/505672/?utm_campaign=505672&amp;utm_source=habrahabr&amp;utm_medium=rss</link>
+      <description>&lt;p&gt;После &lt;a href="https://habr.com/ru/post/501362/"&gt;первого опыта распознавания спортивных движений&lt;/a&gt; у меня зачесались руки сделать что-нибудь еще в этом направлении. Домашняя физкультура уже казалась слишком мелкой целью, так что я замахнулся на игровые виды спорта.&lt;/p&gt;</description>
+      <pubDate>Wed, 19 Aug 2020 09:07:58 +0300</pubDate>
+      <guid>https://habr.com/ru/post/505672/?utm_campaign=505672&amp;utm_source=habrahabr&amp;utm_medium=rss</guid>
+    </item>
+    <item>
+      <title>Автоматизируем обработку изображений с помощью Jupyter и Python</title>
+      <link>https://habr.com/ru/post/515440/?utm_campaign=515440&amp;utm_source=habrahabr&amp;utm_medium=rss</link>
+      <description>&lt;p&gt;Недавно мой ребёнок захотел сделать раскраску для персонажа из любимого мультфильма. Очевидным решением было использовать какой-нибудь графический редактор для Linux (потому что я линуксоид), но потом я вспомнил, что я ленивый человек.&lt;br/&gt;
+&lt;br/&gt;
+К счастью, я знаком с Python и JupyterLab. Посмотрим, насколько Jupyter облегчит задачу.&lt;/p&gt;</description>
+      <pubDate>Wed, 19 Aug 2020 11:07:58 +0300</pubDate>
+      <guid>https://habr.com/ru/post/515440/?utm_campaign=515440&amp;utm_source=habrahabr&amp;utm_medium=rss</guid>
+    </item>
+  </channel>
+</rss>
