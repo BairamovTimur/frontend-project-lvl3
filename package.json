@@ -26,7 +26,7 @@
   "homepage": "https://github.com/BairamovTimur/frontend-project-lvl3#readme",
   "dependencies": {
     "autoprefixer": "^9.8.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "i18next": "^19.7.0",
     "jquery": "^3.5.1",
